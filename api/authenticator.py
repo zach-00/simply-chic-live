@@ -9,7 +9,6 @@ from queries.accounts import AccountRepo
 
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
-# SECRET_KEY = "bcc984cef43a420bfede7b511016287eb4e6e4fc6a1794d3ba8fe0352856308a"
 ALGORITHM = "HS256"
 
 class Token(BaseModel):
@@ -20,6 +19,7 @@ class TokenData(BaseModel):
     username: str | None = None
 
 class User(BaseModel):
+    id: int
     username: str
     full_name: str | None = None
     disabled: bool | None = None
@@ -35,7 +35,6 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
-# class Authenticator:
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
@@ -48,6 +47,7 @@ def get_user(db, username: str):
         username2 = accounts[i].username
         if username == username2:
             return UserInDB(
+                id=accounts[i].id,
                 username=accounts[i].username,
                 full_name=accounts[i].full_name,
                 disabled=accounts[i].disabled,
@@ -101,6 +101,3 @@ async def get_current_active_user(current_user: UserInDB = Depends(get_current_u
         raise HTTPException(status_code=400, detail="Inactive user")
 
     return current_user
-
-
-# authenticator = Authenticator()

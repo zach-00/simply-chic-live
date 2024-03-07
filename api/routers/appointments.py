@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends
+from authenticator import User
+import authenticator as authenticator
 from queries.appointments import(
     AppointmentOut,
     AppointmentsOut,
@@ -21,5 +23,15 @@ def get_appointments(
 def create_appointment(
     appointment: AppointmentIn,
     repo: AppointmentRepo = Depends(),
+    user: User = Depends(authenticator.get_current_active_user),
 ):
-    return repo.create_appointment(appointment)
+    return repo.create_appointment(appointment, user.id)
+
+
+@router.delete("/appointments/{appointment_id}")
+def delete_appointment(
+    appointment_id: int,
+    repo: AppointmentRepo = Depends(),
+    user: User = Depends(authenticator.get_current_active_user),
+):
+    return repo.delete_appointment(appointment_id, user.id)

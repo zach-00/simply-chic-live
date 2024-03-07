@@ -22,5 +22,5 @@ def get_accounts(repo: AccountRepo = Depends()):
 
 
 @router.get("/accounts/me", response_model=User)
-async def read_users_me(current_user: User = Depends(authenticator.get_current_active_user)):
+async def read_account_token(current_user: User = Depends(authenticator.get_current_active_user)):
     return current_user

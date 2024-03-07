@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 from .pool import pool
 from pydantic import BaseModel
-from typing import List, Union
 from fastapi import HTTPException
 
 
@@ -13,6 +12,7 @@ class AppointmentOut(BaseModel):
     end_time: datetime
     appointment_type_id: int
     type_name: str
+    account_id: int
 
 class AppointmentsOut(BaseModel):
     appointments: list[AppointmentOut]
@@ -66,7 +66,7 @@ class AppointmentRepo:
             )
 
 
-    def create_appointment(self, appointment: AppointmentIn):
+    def create_appointment(self, appointment: AppointmentIn, account_id: int):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -101,16 +101,17 @@ class AppointmentRepo:
                     result = db.execute(
                         """
                         INSERT INTO appointments
-                            (client_name, phone_number, start_time, end_time, appointment_type_id)
+                            (client_name, phone_number, start_time, end_time, appointment_type_id, account_id)
                         VALUES
-                            (%s, %s, %s, %s, %s)
+                            (%s, %s, %s, %s, %s, %s)
                         RETURNING
                             id,
                             client_name,
                             phone_number,
                             start_time,
                             end_time,
-                            appointment_type_id;
+                            appointment_type_id,
+                            account_id;
                         """,
                         [
                             appointment.client_name,
@@ -118,6 +119,7 @@ class AppointmentRepo:
                             appointment.start_time,
                             end_time_str,
                             appointment.appointment_type_id,
+                            account_id,
                         ],
                     )
                     response = result.fetchone()
@@ -130,7 +132,34 @@ class AppointmentRepo:
                         end_time=response[4],
                         appointment_type_id=response[5],
                         type_name=type_name,
+                        account_id=account_id,
                     )
+
+        except Exception as e:
+            raise HTTPException(
+                status_code=400,
+                detail=str(e),
+            )
+
+
+    def delete_appointment(self, appointment_id: int, account_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        DELETE FROM appointments
+                        WHERE id = %s
+                        AND account_id = %s
+                        RETURNING id;
+                        """,
+                        [
+                            appointment_id,
+                            account_id,
+                        ],
+                    )
+                    if result.fetchone()[0]:
+                        return True
 
         except Exception as e:
             raise HTTPException(
