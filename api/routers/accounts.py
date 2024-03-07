@@ -1,6 +1,7 @@
 from fastapi import Depends, APIRouter, HTTPException, status
 from queries.accounts import AccountRepo, AccountOut, AccountsOut, AccountIn
-from authenticator import authenticator, User
+import authenticator as authenticator
+from authenticator import User
 
 
 router = APIRouter()
