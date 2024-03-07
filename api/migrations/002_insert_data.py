@@ -12,4 +12,16 @@ steps = [
     """
     """,
     ],
+
+    [
+        """
+    INSERT INTO accounts(username, full_name, hashed_password, disabled)
+    VALUES
+    ('user@email.com', 'Jamie Johnson', '23br872br28b', False),
+    ('name@email.com', 'Billy Walker', 'jkqhfd7qedh', False),
+    ('account@email.com', 'Amy Miller', 'kudsf89wefh', False)
+        """,
+        """
+        """,
+    ],
 ]
