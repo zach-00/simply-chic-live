@@ -2,7 +2,9 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/flowbite/**/*.js",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -17,8 +19,14 @@ module.exports = {
           100: '#f2f3f5',
         },
         primary: '#000300',
+      },
+      fontFamily: {
+        'cursive': ['Cedarville Cursive', 'cursive'],
+        'dancing-script': ['Dancing Script', 'cursive'],
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin'),
+  ],
 }

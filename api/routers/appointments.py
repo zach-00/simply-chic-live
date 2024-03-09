@@ -6,6 +6,7 @@ from queries.appointments import(
     AppointmentsOut,
     AppointmentRepo,
     AppointmentIn,
+    AppointmentTypes,
 )
 from typing import Union, List
 
@@ -17,6 +18,13 @@ def get_appointments(
     repo: AppointmentRepo = Depends(),
     ):
     return {"appointments": repo.get_appointments()}
+
+
+@router.get("/appointments/type", response_model=AppointmentTypes)
+def get_appointment_type(
+    repo: AppointmentRepo = Depends(),
+):
+    return {"appointment_types": repo.get_appointment_type()}
 
 
 @router.post("/appointments", response_model=AppointmentOut)

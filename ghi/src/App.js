@@ -1,12 +1,14 @@
 import './App.css';
 import NavBar from './Nav';
 import BookAppointment from './BookAppointment';
+import Hero from './Hero';
 
 function App() {
   return (
-    <div className="flex">
+    <div>
       <NavBar />
-      {/* <BookAppointment /> */}
+      <Hero />
+      <BookAppointment />
     </div>
   );
 }

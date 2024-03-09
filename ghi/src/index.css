@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,18 +10,34 @@
     .navbar-item {
         @apply p-3
             outline outline-offset-2
-             outline-pink-500 text-white
-             hover:text-pink-500
+            outline-blue-700 text-black
+            hover:text-blue-700
+             dark:outline-pink-500 dark:text-white
+             dark:hover:text-pink-500
             rounded-2xl hover:rounded-xl transition-all
             duration-300 ease-linear cursor-pointer;
 
-    }
+        }
+
+        .dark-mode {
+            @apply bg-gray-200 dark:bg-gray-800;
+        }
+
+
 }
+
+
+/* @layer base {
+    .dark-mode {
+        @apply bg-gray-200 dark:bg-gray-800;
+    }
+} */
 
 
 body {
-    background-color: #000300;
+    background-color: #36393f;
 }
+
 
 
 /* hover:bg-pink-300 hover:text-black */

@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 from .pool import pool
 from pydantic import BaseModel
 from fastapi import HTTPException
@@ -22,6 +22,14 @@ class AppointmentIn(BaseModel):
     phone_number: str
     start_time: datetime
     appointment_type_id: int
+
+class AppointmentType(BaseModel):
+    id: int
+    type_name: str
+    duration: time
+
+class AppointmentTypes(BaseModel):
+    appointment_types: list[AppointmentType]
 
 
 
@@ -160,6 +168,33 @@ class AppointmentRepo:
                     )
                     if result.fetchone()[0]:
                         return True
+
+        except Exception as e:
+            raise HTTPException(
+                status_code=400,
+                detail=str(e),
+            )
+
+
+    def get_appointment_type(self):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT * FROM appointment_type;
+                        """
+                    )
+                    appointment_types = result.fetchall()
+                    app_list = []
+                    for app in appointment_types:
+                        app_type = AppointmentType(
+                            id=app[0],
+                            type_name=app[1],
+                            duration=app[2],
+                        )
+                        app_list.append(app_type)
+                    return app_list
 
         except Exception as e:
             raise HTTPException(
