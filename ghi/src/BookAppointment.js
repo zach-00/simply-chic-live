@@ -59,7 +59,9 @@ function BookAppointment() {
 
 
                 <div className="flex flex-col gap-10">
-                    <p className="lg:text-9xl md:text-7xl sm:text-6xl text-5xl font-dancing-script">By Sarah Scott</p>
+                    <div className="flex flex-row justify-center md:justify-start">
+                        <p className="lg:text-9xl md:text-7xl sm:text-6xl text-5xl font-dancing-script">By Sarah Scott</p>
+                    </div>
                     <div className="flex flex-row justify-center">
                         <img src={Eyelashes} width="70%" className="rounded-lg" />
                     </div>
