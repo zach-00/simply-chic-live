@@ -63,7 +63,7 @@ function BookAppointment() {
                         <p className="lg:text-9xl md:text-7xl sm:text-6xl text-5xl font-dancing-script">By Sarah Scott</p>
                     </div>
                     <div className="flex flex-row justify-center">
-                        <img src={Eyelashes} width="70%" className="rounded-lg" />
+                        <img src={Eyelashes} width="70%" className="rounded-lg border-2 border-black" />
                     </div>
                 </div>
             </div>

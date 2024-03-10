@@ -93,13 +93,13 @@ const ThemeIcon = () => {
     );
 }
 
-const NavBarIcons = ({ icon }) => {
-    return (
-        <div className="navbar-icon">
-            {icon}
-        </div>
-    );
-}
+// const NavBarIcons = ({ icon }) => {
+//     return (
+//         <div className="navbar-icon">
+//             {icon}
+//         </div>
+//     );
+// }
 
 export default NavBar;
 
