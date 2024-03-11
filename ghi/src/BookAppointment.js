@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import Eyelashes from './assets/eyelashextensions.jpeg';
 import { Datepicker } from 'flowbite-react/lib/esm/components/Datepicker/Datepicker';
-import 'flowbite-react/lib/esm/components/Datepicker/Datepicker';
-// import Datepicker from 'flowbite-react/lib/esm/components/Datepicker/Datepicker';
+
 
 function BookAppointment() {
 
@@ -40,7 +39,8 @@ function BookAppointment() {
             <div className="max-width[1240px] w-full h-screen mx-auto my-auto grid md:grid-cols-2 items-center">
 
             <div className="flex flex-row justify-center w-full h-3/5">
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center min-h-72">
+                <h1 className="text-3xl font-extrabold">Book Appointment</h1>
                 <div className="h-full w-full p-10 md:h-4/5 lg:h-4/5 rounded-lg bg-gray-800 shadow-2xl">
             <form className="max-w-sm mx-auto">
                 {/* <label for="appointment_type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label> */}
@@ -55,7 +55,19 @@ function BookAppointment() {
                 </select>
 
 
-                <Datepicker />
+                <Datepicker className="mb-3" />
+
+                <select id="start_time" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3">
+                    <option>Time</option>
+
+                </select>
+
+                <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
+                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                    Book me!
+                    </span>
+                </button>
+
 
             </form>
             </div>
