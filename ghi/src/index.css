@@ -38,6 +38,6 @@ body {
     background-color: #36393f;
 }
 
-
+html{scroll-behavior:smooth}
 
 /* hover:bg-pink-300 hover:text-black */
