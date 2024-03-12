@@ -91,7 +91,6 @@ class AppointmentRepo:
                         ]
                     )
                     duration = result.fetchone()[0]
-                    print(duration)
 
 
             # Start by getting existing appointments in database
@@ -156,12 +155,12 @@ class AppointmentRepo:
                         if time > max(times.values()):
                             available_times.append(time)
 
-                    print(available_times)
-
 
                     ##### Need to compare the duration of the client's selected
                     ##### appointment type to the available time slots before
                     ##### returning the time slots that will work with their chosen appt type
+
+                    available_slots = []
 
                     for i in range(1, len(available_times)):
                         first_str = str(available_times[i-1])
@@ -171,11 +170,11 @@ class AppointmentRepo:
                         second_time = datetime.strptime(second_str, "%H:%M:%S")
 
                         window = second_time - timedelta(hours=first_time.hour, minutes=first_time.minute, seconds=first_time.second)
-                        window_str = window.strftime("%H:%M:%S")
+                        if duration <= window.time():
+                            available_slots.append(available_times[i-1])
 
 
-
-                    return available_times
+                    return available_slots
 
 
         except Exception as e:
