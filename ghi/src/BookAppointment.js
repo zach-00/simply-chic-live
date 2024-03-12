@@ -93,8 +93,16 @@ function BookAppointment() {
                     <option>Time</option>
                     {appointmentTimes.length > 0
                     ? appointmentTimes.map((time, index) => {
+                        let temp = time.replace(':', '')
+                        let timeNum = Number(temp.slice(0, 4))
+                        let hrs = temp.slice(0, 2)
+                        let suffix = hrs >= 12 ? 'pm' : 'am'
+                        let hours = (hrs > 12) ? hrs - 12 : hrs
+                        let hoursStr = hours.toString()
+                        let timeStr = timeNum.toString()
+                        let final = `${hoursStr}:${timeStr.slice(2, 4)}`
                         return (
-                            <option key={index} value={time}>{time}</option>
+                            <option key={index} value={time}>{final} {suffix}</option>
                         );
                     })
                     : <option>Time</option>
