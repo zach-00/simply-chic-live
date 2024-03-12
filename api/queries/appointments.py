@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, time
+from datetime import datetime, timedelta, time, date
 from .pool import pool
 from pydantic import BaseModel
 from fastapi import HTTPException
@@ -47,7 +47,8 @@ class AppointmentRepo:
                             a.start_time,
                             a.end_time,
                             a.appointment_type_id,
-                            at.type_name
+                            at.type_name,
+                            a.account_id
                         FROM appointment_type AS at
                         INNER JOIN appointments AS a
                         ON at.id = a.appointment_type_id;
@@ -64,9 +65,81 @@ class AppointmentRepo:
                             end_time=a[4],
                             appointment_type_id=a[5],
                             type_name=a[6],
+                            account_id=a[7],
                         )
                         appointments_list.append(appointment)
                     return appointments_list
+        except Exception as e:
+            raise HTTPException(
+                status_code=400,
+                detail=str(e),
+            )
+
+
+    def get_available_appointments(self, date: date):
+        search_date = f"{date}%"
+        try:
+            # Start by getting existing appointments in database
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT id, start_time, end_time
+                        FROM appointments
+                        WHERE DATE(start_time) = %s;
+                        """,
+                        [
+                            search_date,
+                        ]
+                    )
+                    existing_appointments = result.fetchall()
+
+                    all_times = [
+                        "08:00:00",
+                        "08:30:00",
+                        "09:00:00",
+                        "09:30:00",
+                        "10:00:00",
+                        "10:30:00",
+                        "11:00:00",
+                        "11:30:00",
+                        "12:30:00",
+                        "13:00:00",
+                        "13:30:00",
+                        "14:00:00",
+                        "14:30:00",
+                        ]
+
+                    available_times = []
+
+                    unsorted_times = {}
+                    for t in existing_appointments:
+                        unsorted_times.update({t[1].time(): t[2].time()})
+
+                    sorted_times = sorted(unsorted_times.items(), key=lambda x:x[1])
+                    times = dict(sorted_times)
+
+                    for start, end in times.items():
+                        for t in all_times:
+                            time = datetime.strptime(t, "%H:%M:%S").time()
+                            if time > end:
+                                break
+                            if time >= start and time < end:
+                                continue
+                            else:
+                                if len(available_times) == 0:
+                                    available_times.append(time)
+                                elif time not in available_times and time > max(available_times):
+                                    available_times.append(time)
+
+                    for t in all_times:
+                        time = datetime.strptime(t, "%H:%M:%S").time()
+                        if time > max(times.values()):
+                            available_times.append(time)
+
+                    return available_times
+
+
         except Exception as e:
             raise HTTPException(
                 status_code=400,
@@ -201,3 +274,19 @@ class AppointmentRepo:
                 status_code=400,
                 detail=str(e),
             )
+
+
+
+
+
+        # date = `%{date}%`
+
+        # """
+        # SELECT start_time, end_time
+        # FROM appointments
+        # WHERE start_time LIKE %s
+        # AND end_time LIKE %s
+        # """,
+        # [
+        #     date
+        # ]
