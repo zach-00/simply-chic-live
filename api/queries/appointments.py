@@ -76,16 +76,34 @@ class AppointmentRepo:
             )
 
 
-    def get_available_appointments(self, date: date):
-        search_date = f"{date}%"
+    def get_available_appointments(self, date: date, appointment_type_id: int):
         try:
-            # Start by getting existing appointments in database
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id, start_time, end_time
-                        FROM appointments
+                        SELECT duration
+                        FROM appointment_type
+                        WHERE id = %s;
+                        """,
+                        [
+                            appointment_type_id,
+                        ]
+                    )
+                    duration = result.fetchone()[0]
+                    print(duration)
+
+
+            # Start by getting existing appointments in database
+            search_date = f"{date}%"
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT a.id, a.start_time, a.end_time, at.duration
+                        FROM appointments AS a
+                        INNER JOIN appointment_type AS at
+                        ON a.appointment_type_id = at.id
                         WHERE DATE(start_time) = %s;
                         """,
                         [
@@ -93,6 +111,7 @@ class AppointmentRepo:
                         ]
                     )
                     existing_appointments = result.fetchall()
+                    print("EXISTING APPTS *****", existing_appointments)
 
                     all_times = [
                         "08:00:00",
@@ -136,6 +155,25 @@ class AppointmentRepo:
                         time = datetime.strptime(t, "%H:%M:%S").time()
                         if time > max(times.values()):
                             available_times.append(time)
+
+                    print(available_times)
+
+
+                    ##### Need to compare the duration of the client's selected
+                    ##### appointment type to the available time slots before
+                    ##### returning the time slots that will work with their chosen appt type
+
+                    for i in range(1, len(available_times)):
+                        first_str = str(available_times[i-1])
+                        second_str = str(available_times[i])
+
+                        first_time = datetime.strptime(first_str, "%H:%M:%S")
+                        second_time = datetime.strptime(second_str, "%H:%M:%S")
+
+                        window = second_time - timedelta(hours=first_time.hour, minutes=first_time.minute, seconds=first_time.second)
+                        window_str = window.strftime("%H:%M:%S")
+
+
 
                     return available_times
 

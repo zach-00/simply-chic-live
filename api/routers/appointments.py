@@ -21,12 +21,13 @@ def get_appointments(
     return {"appointments": repo.get_appointments()}
 
 
-@router.get("/appointments/{date}")
+@router.get("/appointments/{date}/{appointment_type_id}")
 def get_available_appointments(
     date: date,
+    appointment_type_id: int,
     repo: AppointmentRepo = Depends(),
     ):
-    return {"available_appointments": repo.get_available_appointments(date)}
+    return {"available_appointments": repo.get_available_appointments(date, appointment_type_id)}
 
 
 @router.get("/appointments/type", response_model=AppointmentTypes)
