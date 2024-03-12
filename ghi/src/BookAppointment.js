@@ -7,7 +7,7 @@ function BookAppointment() {
 
     const [appointmentTypes, setAppointmentTypes] = useState([]);
     const [appointmentType, setAppointmentType] = useState('');
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
     const [appointmentTimes, setAppointmentTimes] = useState([]);
 
 

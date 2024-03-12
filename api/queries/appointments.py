@@ -110,6 +110,8 @@ class AppointmentRepo:
                         ]
                     )
                     existing_appointments = result.fetchall()
+
+
                     print("EXISTING APPTS *****", existing_appointments)
 
                     all_times = [
@@ -127,6 +129,9 @@ class AppointmentRepo:
                         "14:00:00",
                         "14:30:00",
                         ]
+
+                    if len(existing_appointments) == 0:
+                        return all_times
 
                     available_times = []
 
