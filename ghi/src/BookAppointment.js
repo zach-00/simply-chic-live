@@ -8,11 +8,13 @@ function BookAppointment() {
     const [appointmentTypes, setAppointmentTypes] = useState([]);
     const [appointmentType, setAppointmentType] = useState('');
     const [date, setDate] = useState('');
+    const [appointmentTimes, setAppointmentTimes] = useState([]);
 
 
     const handleDateChange = (e) => {
         const value = e.toISOString().slice(0, 10);
         setDate(value);
+
     }
 
     const handleAppointmentTypeChange = (e) => {
@@ -32,9 +34,33 @@ function BookAppointment() {
 
     }
 
+
+    const fetchAvailableTimes = async () => {
+        const url = `${process.env.REACT_APP_API_HOST}/appointments/${date}/${appointmentType}`;
+
+        console.log("DATE *****", date, "APPT ID ***", appointmentType);
+
+
+        const response = await fetch(url);
+
+        if (response.ok) {
+            const data = await response.json();
+            setAppointmentTimes(data.available_appointments);
+        }
+
+    }
+
     useEffect(() => {
         fetchAppointmentType();
     }, []);
+
+    useEffect(() => {
+        if (date !== '' && appointmentType !== '') {
+            fetchAvailableTimes();
+        } else {
+            return;
+        }
+    }, [date, appointmentType]);
 
 
 
@@ -65,6 +91,14 @@ function BookAppointment() {
 
                 <select id="start_time" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3">
                     <option>Time</option>
+                    {appointmentTimes.length > 0
+                    ? appointmentTimes.map((time, index) => {
+                        return (
+                            <option key={index} value={time}>{time}</option>
+                        );
+                    })
+                    : <option>Time</option>
+                }
 
                 </select>
 

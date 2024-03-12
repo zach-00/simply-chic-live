@@ -76,7 +76,7 @@ class AppointmentRepo:
             )
 
 
-    def get_available_appointments(self, date: date, appointment_type_id: int):
+    def get_available_appointments(self, date_time: date, appointment_type_id: int):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -94,7 +94,7 @@ class AppointmentRepo:
 
 
             # Start by getting existing appointments in database
-            search_date = f"{date}%"
+            search_date = f"{date_time}%"
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
@@ -311,19 +311,3 @@ class AppointmentRepo:
                 status_code=400,
                 detail=str(e),
             )
-
-
-
-
-
-        # date = `%{date}%`
-
-        # """
-        # SELECT start_time, end_time
-        # FROM appointments
-        # WHERE start_time LIKE %s
-        # AND end_time LIKE %s
-        # """,
-        # [
-        #     date
-        # ]

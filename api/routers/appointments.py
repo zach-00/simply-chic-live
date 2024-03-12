@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from datetime import date
+from datetime import datetime, date
 from authenticator import User
 import authenticator as authenticator
 from queries.appointments import(
@@ -21,13 +21,16 @@ def get_appointments(
     return {"appointments": repo.get_appointments()}
 
 
-@router.get("/appointments/{date}/{appointment_type_id}")
+@router.get("/appointments/{date_str}/{appointment_type_id_str}")
 def get_available_appointments(
-    date: date,
-    appointment_type_id: int,
+    date_str: str,
+    appointment_type_id_str: str,
     repo: AppointmentRepo = Depends(),
     ):
-    return {"available_appointments": repo.get_available_appointments(date, appointment_type_id)}
+    appointment_type_id = int(appointment_type_id_str)
+    date_time = datetime.strptime(date_str, "%Y-%m-%d").date()
+    print("DATE_TIME ***********",date_time)
+    return {"available_appointments": repo.get_available_appointments(date_time, appointment_type_id)}
 
 
 @router.get("/appointments/type", response_model=AppointmentTypes)
