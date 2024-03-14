@@ -36,7 +36,7 @@ const ThemeIcon = () => {
 
         <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b rounded-lg shadow-lg border-gray-200 dark:border-gray-600">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <h1 className="flex text-black dark:text-gray-400 items-center text-3xl font-bold space-x-3 rtl:space-x-reverse">Simply Chic.</h1>
+            <NavLink to="/"><h1 className="flex text-black dark:text-gray-400 items-center text-3xl font-bold space-x-3 rtl:space-x-reverse">Simply Chic.</h1></NavLink>
                 <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
 
                         <ThemeIcon />
@@ -57,10 +57,10 @@ const ThemeIcon = () => {
                             <a href="#" className="block py-2 px-3 rounded md:bg-transparent navbar-item">Portfolio</a>
                         </li>
                         <li>
-                            <a href="#" className="block py-2 px-3 rounded md:bg-transparent navbar-item">Contact Me</a>
+                            <a href="#" className="block py-2 px-3 rounded md:bg-transparent navbar-item">Services</a>
                         </li>
                         <li>
-                            <a href="#" className="block py-2 px-3 rounded md:bg-transparent navbar-item">Socials</a>
+                            <a href="#" className="block py-2 px-3 rounded md:bg-transparent navbar-item">Promotions</a>
                         </li>
                         <li>
                             {token

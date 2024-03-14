@@ -111,7 +111,7 @@ function BookAppointment() {
 
     return (
         <section id="book_appointment">
-        <div className="w-full h-screen bg-white py-16 px-4">
+        <div className="w-full h-screen bg-white">
             <div className="max-width[1240px] w-full h-screen mx-auto my-auto grid md:grid-cols-2 items-center">
 
             <div className="flex flex-row justify-center w-full h-3/5">

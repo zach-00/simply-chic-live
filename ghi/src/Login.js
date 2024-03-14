@@ -66,8 +66,8 @@ function LoginPage() {
 
     return (
         <>
-            <div className="flex flex-row justify-center h-screen">
-                <div className="flex flex-col justify-center bg-slate-300 dark:bg-gray-700 max-w-[500px] sm:max-w-[600px] md:max-w-[1240px] w-full">
+            <div className="flex flex-row justify-center h-screen bg-slate-200 dark:bg-gray-700">
+                <div className="flex flex-col justify-center bg-slate-200 dark:bg-gray-700 max-w-[500px] sm:max-w-[600px] md:max-w-[1240px] w-full">
                     <div className="flex flex-row justify-center">
                         <div className="flex flex-col justify-center w-2/4">
                             <p className="text-8xl font-dancing-script text-pink-500 gap-10 text-center">Login 💋</p>

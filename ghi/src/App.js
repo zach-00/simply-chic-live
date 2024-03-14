@@ -3,6 +3,7 @@ import './App.css';
 import NavBar from './Nav';
 import LoginPage from './Login';
 import MainPage from './MainPage';
+import Footer from './Footer';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
 
 
       </Routes>
+      <Footer />
     </div>
   </BrowserRouter>
 
