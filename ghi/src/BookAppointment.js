@@ -13,7 +13,6 @@ function BookAppointment() {
     const token = localStorage.getItem('token');
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [userId, setUserId] = useState('');
 
 
     const handleDateChange = (e) => {
@@ -60,7 +59,6 @@ function BookAppointment() {
         fetchAppointmentType();
         setFullName(localStorage.getItem('full_name'));
         setPhoneNumber(localStorage.getItem('phone_number'));
-        setUserId(localStorage.getItem('user_id'));
     }, []);
 
     useEffect(() => {

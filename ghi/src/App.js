@@ -7,11 +7,11 @@ import MainPage from './MainPage';
 function App() {
   return (
 
-
+  <BrowserRouter>
     <div>
       <NavBar />
 
-      <BrowserRouter>
+
       <Routes>
 
         <Route index element={<MainPage />} />
@@ -21,8 +21,8 @@ function App() {
 
 
       </Routes>
-    </BrowserRouter>
     </div>
+  </BrowserRouter>
 
   );
 }

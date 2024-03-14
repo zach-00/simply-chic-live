@@ -1,5 +1,6 @@
 import useDarkMode from "./useDarkMode";
 import { FaSun, FaMoon } from 'react-icons/fa';
+import { NavLink, Link } from "react-router-dom";
 
 const NavBar = () => {
 
@@ -81,7 +82,7 @@ const ThemeIcon = () => {
         <a href="#" className="block py-2 px-3 rounded md:bg-transparent navbar-item">Socials</a>
       </li>
       <li>
-        <a href="#" className="block py-2 px-3 rounded md:bg-transparent navbar-item">Log In</a>
+        <NavLink to="login" className="block py-2 px-3 rounded md:bg-transparent navbar-item">Log In</NavLink>
       </li>
     </ul>
   </div>

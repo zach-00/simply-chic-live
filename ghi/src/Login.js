@@ -5,9 +5,7 @@ function LoginPage() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [fullName, setFullName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState();
-    const [userId, setUserId] = useState('');
+    const navigate = useNavigate();
 
 
     const handleUsernameChange = (e) => {
@@ -48,9 +46,6 @@ function LoginPage() {
         if (response.ok) {
             const data = await response.json();
             console.log(data);
-            setFullName(data.full_name);
-            setPhoneNumber(data.phone_number);
-            setUserId(data.user_id);
 
             if (data) {
                 localStorage.setItem('token', data.access_token);
@@ -58,6 +53,8 @@ function LoginPage() {
                 localStorage.setItem('phone_number', data.phone_number);
                 localStorage.setItem('user_id', data.user_id);
             }
+
+        navigate('/');
 
         }
     } catch (err) {
