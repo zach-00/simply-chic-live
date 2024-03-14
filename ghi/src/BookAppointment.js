@@ -9,6 +9,7 @@ function BookAppointment() {
     const [appointmentType, setAppointmentType] = useState('');
     const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
     const [appointmentTimes, setAppointmentTimes] = useState([]);
+    const [appointmentTime, setAppointmentTime] = useState('');
 
 
     const handleDateChange = (e) => {
@@ -20,6 +21,11 @@ function BookAppointment() {
     const handleAppointmentTypeChange = (e) => {
         const value = e.target.value;
         setAppointmentType(value);
+    }
+
+    const handleTimeChange = (e) => {
+        const value = e.target.value;
+        setAppointmentTime(value);
     }
 
 
@@ -61,6 +67,9 @@ function BookAppointment() {
 
 
 
+
+
+
     return (
         <section id="book_appointment">
         <div className="w-full h-screen bg-white py-16 px-4">
@@ -86,7 +95,7 @@ function BookAppointment() {
                 <Datepicker onSelectedDateChanged={handleDateChange} datepicker-format="yyyy-MM-dd" className="mb-3" />
 
 
-                <select id="start_time" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3">
+                <select onChange={handleTimeChange} id="start_time" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3">
                     <option>Time</option>
                     {appointmentTimes.length > 0
                     ? appointmentTimes.map((time, index) => {

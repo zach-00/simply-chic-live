@@ -35,16 +35,14 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
             )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
 
-    # current_user = await authenticator.get_current_active_user(user)  # Tried finding a way to add current user to access token, hoping this would enabled /token path to actually authenticate user the way authorize button does
-
     access_token = authenticator.create_access_token(
         data={"sub": user.username},
         expires_delta=access_token_expires
         )
 
-    # print("GET CURRENT ACTIVE USER ****", await authenticator.get_current_active_user(user))
+    return {"access_token": access_token, "token_type": "bearer", "user_id": user.id, "full_name": user.full_name}
 
-    return {"access_token": access_token, "token_type": "bearer"}
+
 
 
 @app.get("/")

@@ -14,6 +14,8 @@ ALGORITHM = "HS256"
 class Token(BaseModel):
     access_token: str
     token_type: str
+    user_id: int
+    full_name: str
 
 class TokenData(BaseModel):
     username: str | None = None
