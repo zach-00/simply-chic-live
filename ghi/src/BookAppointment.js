@@ -10,12 +10,15 @@ function BookAppointment() {
     const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
     const [appointmentTimes, setAppointmentTimes] = useState([]);
     const [appointmentTime, setAppointmentTime] = useState('');
+    const token = localStorage.getItem('token');
+    const [fullName, setFullName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [userId, setUserId] = useState('');
 
 
     const handleDateChange = (e) => {
         const value = e.toISOString().slice(0, 10);
         setDate(value);
-
     }
 
     const handleAppointmentTypeChange = (e) => {
@@ -55,6 +58,9 @@ function BookAppointment() {
 
     useEffect(() => {
         fetchAppointmentType();
+        setFullName(localStorage.getItem('full_name'));
+        setPhoneNumber(localStorage.getItem('phone_number'));
+        setUserId(localStorage.getItem('user_id'));
     }, []);
 
     useEffect(() => {
@@ -66,8 +72,36 @@ function BookAppointment() {
     }, [date, appointmentType]);
 
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const url = `${process.env.REACT_APP_API_HOST}/appointments`;
+
+        const data = {
+            client_name: fullName,
+            phone_number: phoneNumber,
+            start_time: `${date} ${appointmentTime}`,
+            appointment_type_id: Number(appointmentType),
+        };
+
+        const fetchOptions = {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        };
 
 
+        const response = await fetch(url, fetchOptions);
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+        }
+
+    }
 
 
     return (
@@ -79,7 +113,7 @@ function BookAppointment() {
             <div className="flex flex-col justify-center min-h-72">
                 <h1 className="text-3xl font-extrabold">Book Appointment</h1>
                 <div className="h-full w-full p-10 md:h-4/5 lg:h-4/5 rounded-lg bg-gray-800 shadow-2xl">
-            <form className="max-w-sm mx-auto">
+            <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
                 {/* <label for="appointment_type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label> */}
                 <select onChange={handleAppointmentTypeChange} value={appointmentType} id="appointment_type" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3">
                     <option>Appointment Type</option>

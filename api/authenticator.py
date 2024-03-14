@@ -16,6 +16,7 @@ class Token(BaseModel):
     token_type: str
     user_id: int
     full_name: str
+    phone_number: str
 
 class TokenData(BaseModel):
     username: str | None = None
@@ -24,6 +25,7 @@ class User(BaseModel):
     id: int
     username: str
     full_name: str | None = None
+    phone_number: str
     disabled: bool | None = None
 
 class UserInDB(User):
@@ -52,6 +54,7 @@ def get_user(db, username: str):
                 id=accounts[i].id,
                 username=accounts[i].username,
                 full_name=accounts[i].full_name,
+                phone_number=accounts[i].phone_number,
                 disabled=accounts[i].disabled,
                 hashed_password=accounts[i].hashed_password,
             )

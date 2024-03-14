@@ -8,6 +8,7 @@ class AccountOut(BaseModel):
     id: int
     username: str
     full_name: str
+    phone_number: str
     disabled: bool
 
 class AccountOutWithPass(AccountOut):
@@ -19,6 +20,7 @@ class AccountsOut(BaseModel):
 class AccountIn(BaseModel):
     username: str
     full_name: str
+    phone_number: str
     password: str
     disabled: bool
 
@@ -40,8 +42,9 @@ class AccountRepo:
                             id=acc[0],
                             username=acc[1],
                             full_name=acc[2],
-                            hashed_password=acc[3],
-                            disabled=acc[4],
+                            phone_number=acc[3],
+                            hashed_password=acc[4],
+                            disabled=acc[5],
                         )
                         accounts_list.append(account)
                     return accounts_list
@@ -63,6 +66,7 @@ class AccountRepo:
                             id,
                             username,
                             full_name,
+                            phone_number,
                             disabled
                         FROM accounts;
                         """
@@ -74,7 +78,8 @@ class AccountRepo:
                             id=acc[0],
                             username=acc[1],
                             full_name=acc[2],
-                            disabled=acc[3],
+                            phone_number=acc[3],
+                            disabled=acc[4],
                         )
                         accounts_list.append(account)
                     return accounts_list
@@ -92,18 +97,20 @@ class AccountRepo:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        INSERT INTO accounts (username, full_name, hashed_password, disabled)
+                        INSERT INTO accounts (username, full_name, phone_number, hashed_password, disabled)
                         VALUES
-                            (%s, %s, %s, %s)
+                            (%s, %s, %s, %s, %s)
                         RETURNING
                         id,
                         username,
                         full_name,
+                        phone_number,
                         disabled;
                         """,
                         [
                             account.username,
                             account.full_name,
+                            account.phone_number,
                             hashed_pw,
                             account.disabled,
                         ],
@@ -113,7 +120,8 @@ class AccountRepo:
                         id=acc[0],
                         username=acc[1],
                         full_name=acc[2],
-                        disabled=acc[3],
+                        phone_number=acc[3],
+                        disabled=acc[4],
                     )
 
 

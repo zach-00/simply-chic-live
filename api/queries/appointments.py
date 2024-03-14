@@ -20,7 +20,7 @@ class AppointmentsOut(BaseModel):
 class AppointmentIn(BaseModel):
     client_name: str
     phone_number: str
-    start_time: datetime
+    start_time: str
     appointment_type_id: int
 
 class AppointmentType(BaseModel):
@@ -231,8 +231,13 @@ class AppointmentRepo:
                     # Add duration to start time
                     end_time = start_time + timedelta(hours=duration.hour, minutes=duration.minute, seconds=duration.second)
 
+
                     # Convert end time back to string
                     end_time_str = end_time.strftime("%Y-%m-%d %H:%M:%S")
+
+
+                    print("TIME TEST: ", datetime.strptime(appointment.start_time, "%Y-%m-%d %H:%M:%S").time())
+
 
             with pool.connection() as conn:
                 with conn.cursor() as db:

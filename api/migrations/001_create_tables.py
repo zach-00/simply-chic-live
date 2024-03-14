@@ -6,6 +6,7 @@ steps = [
     id SERIAL PRIMARY KEY NOT NULL,
     username VARCHAR(200) NOT NULL,
     full_name VARCHAR(50) NOT NULL,
+    phone_number VARCHAR(15) NOT NULL,
     hashed_password VARCHAR(250) NOT NULL,
     disabled BOOLEAN DEFAULT FALSE
     )
