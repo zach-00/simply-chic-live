@@ -37,10 +37,6 @@ function BookAppointment() {
 
     const fetchAvailableTimes = async () => {
         const url = `${process.env.REACT_APP_API_HOST}/appointments/${date}/${appointmentType}`;
-
-        console.log("DATE *****", date, "APPT ID ***", appointmentType);
-
-
         const response = await fetch(url);
 
         if (response.ok) {
@@ -49,6 +45,7 @@ function BookAppointment() {
         }
 
     }
+
 
     useEffect(() => {
         fetchAppointmentType();
@@ -94,15 +91,12 @@ function BookAppointment() {
                     {appointmentTimes.length > 0
                     ? appointmentTimes.map((time, index) => {
                         let temp = time.replace(':', '')
-                        let timeNum = Number(temp.slice(0, 4))
-                        console.log("TIMENUM ***", timeNum)
                         let hrs = temp.slice(0, 2)
                         let suffix = hrs >= 12 ? 'pm' : 'am'
                         let hours = (hrs > 12) ? hrs - 12 : hrs
                         let hoursStr = hours.toString()
-                        let timeStr = timeNum.toString()
-                        if (timeStr.length === 3) {timeStr += '0'}
-                        let final = `${hoursStr}:${timeStr.slice(2, 4)}`
+                        let minutes = temp.slice(2, 4)
+                        let final = `${hoursStr}:${minutes}`
                         return (
                             <option key={index} value={time}>{final} {suffix}</option>
                         );

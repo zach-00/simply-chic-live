@@ -29,7 +29,7 @@ def get_available_appointments(
     ):
     appointment_type_id = int(appointment_type_id_str)
     date_time = datetime.strptime(date_str, "%Y-%m-%d").date()
-    print("DATE_TIME ***********",date_time)
+    # print("DATE_TIME ***********",date_time)
     return {"available_appointments": repo.get_available_appointments(date_time, appointment_type_id)}
 
 

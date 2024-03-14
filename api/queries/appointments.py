@@ -111,9 +111,6 @@ class AppointmentRepo:
                     )
                     existing_appointments = result.fetchall()
 
-
-                    print("EXISTING APPTS *****", existing_appointments)
-
                     all_times = [
                         "08:00:00",
                         "08:30:00",
@@ -128,6 +125,10 @@ class AppointmentRepo:
                         "13:30:00",
                         "14:00:00",
                         "14:30:00",
+                        "15:00:00",
+                        "15:30:00",
+                        "16:00:00",
+                        "16:30:00",
                         ]
 
                     if len(existing_appointments) == 0:
@@ -142,44 +143,58 @@ class AppointmentRepo:
                     sorted_times = sorted(unsorted_times.items(), key=lambda x:x[1])
                     times = dict(sorted_times)
 
+                    to_be_left_out = []
+
                     for start, end in times.items():
                         for t in all_times:
                             time = datetime.strptime(t, "%H:%M:%S").time()
-                            if time > end:
-                                break
+
                             if time >= start and time < end:
-                                continue
-                            else:
-                                if len(available_times) == 0:
-                                    available_times.append(time)
-                                elif time not in available_times and time > max(available_times):
-                                    available_times.append(time)
+                                print("Time to be left out: ", time)
+                                to_be_left_out.append(time)
+
+
+                                # if len(available_times) == 0:
+                                #     available_times.append(time)
+                                # if time not in to_be_left_out and time > max(available_times):
+                                #     available_times.append(time)
+
+
 
                     for t in all_times:
                         time = datetime.strptime(t, "%H:%M:%S").time()
-                        if time > max(times.values()):
+                        if time not in to_be_left_out:
                             available_times.append(time)
-
-
-                    ##### Need to compare the duration of the client's selected
-                    ##### appointment type to the available time slots before
-                    ##### returning the time slots that will work with their chosen appt type
 
                     available_slots = []
 
-                    for i in range(1, len(available_times)):
-                        first_str = str(available_times[i-1])
-                        second_str = str(available_times[i])
+                    duration_td = timedelta(hours=duration.hour, minutes=duration.minute, seconds=duration.second)
 
-                        first_time = datetime.strptime(first_str, "%H:%M:%S")
-                        second_time = datetime.strptime(second_str, "%H:%M:%S")
+                    for t in available_times:
+                        time = timedelta(hours=t.hour, minutes=t.minute, seconds=t.second)
 
-                        window = second_time - timedelta(hours=first_time.hour, minutes=first_time.minute, seconds=first_time.second)
-                        if duration <= window.time():
-                            available_slots.append(available_times[i-1])
+                        for ex_appt in sorted_times:
+                            start_time = timedelta(hours=ex_appt[0].hour, minutes=ex_appt[0].minute, seconds=ex_appt[0].second)
+                            end_time = timedelta(hours=ex_appt[1].hour, minutes=ex_appt[1].minute, seconds=ex_appt[1].second)
 
 
-                    return available_slots
+                            if end_time < time or end_time == time:
+                                continue
+                            if time + duration_td > start_time and (time + duration_td <= end_time or time + duration_td > end_time):
+                                continue
+                            else:
+                                time_slot = datetime.strptime(str(time), "%H:%M:%S").time()
+                                if time_slot not in available_slots:
+                                    available_slots.append(time_slot)
+
+
+                    for time in available_times:
+                        if time > max(available_slots) and time >= max(sorted_times)[1]:
+                            if time not in available_slots:
+                                available_slots.append(time)
+
+
+                    return sorted(available_slots)
 
 
         except Exception as e:
