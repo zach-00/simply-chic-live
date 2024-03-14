@@ -77,6 +77,7 @@ function BookAppointment() {
 
         if (token === null) {
             navigate('/login');
+            return;
         }
 
         const url = `${process.env.REACT_APP_API_HOST}/appointments`;
@@ -148,7 +149,7 @@ function BookAppointment() {
                             <option key={index} value={time}>{final} {suffix}</option>
                         );
                     })
-                    : <option>Time</option>
+                    : null
                 }
 
                 </select>
