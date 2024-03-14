@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Eyelashes from './assets/eyelashextensions.jpeg';
 import { Datepicker } from 'flowbite-react/lib/esm/components/Datepicker/Datepicker';
+import { useNavigate } from 'react-router-dom';
 
 
 function BookAppointment() {
@@ -13,6 +14,7 @@ function BookAppointment() {
     const token = localStorage.getItem('token');
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const navigate = useNavigate();
 
 
     const handleDateChange = (e) => {
@@ -72,6 +74,10 @@ function BookAppointment() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (token === null) {
+            navigate('/login');
+        }
 
         const url = `${process.env.REACT_APP_API_HOST}/appointments`;
 
@@ -147,11 +153,22 @@ function BookAppointment() {
 
                 </select>
 
-                <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
+                {console.log(token)}
+
+                {token
+                ? <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
                     <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                     Book me!
                     </span>
+                 </button>
+
+                : <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
+                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                    Log In To Book Appointment
+                    </span>
                 </button>
+
+                }
 
 
             </form>

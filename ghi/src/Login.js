@@ -103,31 +103,3 @@ function LoginPage() {
 }
 
 export default LoginPage;
-
-
-
-
-// SETTING TOKEN IN LOCAL STORAGE ????
-
-
-// const login = async (username, password) => {
-//     const response = await fetch('/login', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({
-//         username,
-//         password
-//       })
-//     });
-
-//     const data = await response.json();
-
-//     if (data.token) {
-//       localStorage.setItem('token', data.token);
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   };
