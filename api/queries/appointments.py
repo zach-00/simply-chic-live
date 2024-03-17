@@ -166,6 +166,8 @@ class AppointmentRepo:
                         if time not in to_be_left_out:
                             available_times.append(time)
 
+                    # sorted_available_times = sorted(available_times)
+
                     available_slots = []
 
                     duration_td = timedelta(hours=duration.hour, minutes=duration.minute, seconds=duration.second)

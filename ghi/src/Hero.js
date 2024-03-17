@@ -18,7 +18,7 @@ function Hero() {
                         <p className="md:text-5xl sm:text-4xl text-xl font-bold">Feel beautiful with</p>
                     </div>
                     <div className="flex flex-row justify-center md:justify-start">
-                        <ReactTyped className="md:text-3xl sm:text-2xl text-xl font-bold ml-1" strings={['eyelash extensions', 'hair extensions', 'botox']} typeSpeed={80} backSpeed={30} loop></ReactTyped>
+                        <ReactTyped className="md:text-3xl sm:text-2xl text-xl font-bold ml-1" strings={['eyelash extensions', 'hair extensions', 'botox', 'body contouring']} typeSpeed={80} backSpeed={30} loop></ReactTyped>
                     </div>
                     <div className="flex flex-row justify-center md:justify-start">
                         <a href="#book_appointment" className="bg-pink-500 w-60 mx-2 my-6 py-3 rounded-lg text-center font-bold text-xl hover:shadow-xl hover:bg-pink-400 transition-all duration-200 scroll-smooth">Book Appointment</a>

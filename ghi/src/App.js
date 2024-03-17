@@ -4,6 +4,7 @@ import NavBar from './Nav';
 import LoginPage from './Login';
 import MainPage from './MainPage';
 import Footer from './Footer';
+import Portfolio from './Portfolio';
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
         <Route index element={<MainPage />} />
 
         <Route path="login" element={<LoginPage />} />
+
+        <Route path="portfolio" element={<Portfolio />} />
 
 
 

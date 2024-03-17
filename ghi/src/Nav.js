@@ -54,7 +54,7 @@ const ThemeIcon = () => {
                             <a href="#" className="block py-2 px-3 rounded md:bg-transparent navbar-item" aria-current="page">Appointments</a>
                         </li>
                         <li>
-                            <a href="#" className="block py-2 px-3 rounded md:bg-transparent navbar-item">Portfolio</a>
+                            <NavLink to="portfolio" className="block py-2 px-3 rounded md:bg-transparent navbar-item">Portfolio</NavLink>
                         </li>
                         <li>
                             <a href="#" className="block py-2 px-3 rounded md:bg-transparent navbar-item">Services</a>

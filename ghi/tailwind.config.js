@@ -24,6 +24,7 @@ module.exports = {
       fontFamily: {
         'cursive': ['Cedarville Cursive', 'cursive'],
         'dancing-script': ['Dancing Script', 'cursive'],
+        'portfolio': ['Truculenta', 'sans-serif'],
       }
     },
   },

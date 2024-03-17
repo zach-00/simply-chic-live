@@ -14,6 +14,8 @@ function BookAppointment() {
     const token = localStorage.getItem('token');
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [booked, setBooked] = useState(false);
+    const firstName = fullName.split(' ')[0];
     const navigate = useNavigate();
 
 
@@ -30,6 +32,10 @@ function BookAppointment() {
     const handleTimeChange = (e) => {
         const value = e.target.value;
         setAppointmentTime(value);
+    }
+
+    const handleClose = () => {
+        setBooked(false);
     }
 
 
@@ -86,7 +92,7 @@ function BookAppointment() {
             client_name: fullName,
             phone_number: phoneNumber,
             start_time: `${date} ${appointmentTime}`,
-            appointment_type_id: Number(appointmentType),
+            appointment_type_id: appointmentType,
         };
 
         const fetchOptions = {
@@ -104,6 +110,9 @@ function BookAppointment() {
         if (response.ok) {
             const data = await response.json();
             console.log(data);
+            setBooked(true);
+            setAppointmentTime('');
+            setAppointmentType('');
         }
 
     }
@@ -115,7 +124,7 @@ function BookAppointment() {
             <div className="max-width[1240px] w-full h-screen mx-auto my-auto grid md:grid-cols-2 items-center">
 
             <div className="flex flex-row justify-center w-full h-3/5">
-            <div className="flex flex-col justify-center min-h-72">
+            <div className="flex flex-col justify-center min-h-96">
                 <h1 className="text-3xl font-extrabold">Book Appointment</h1>
                 <div className="h-full w-full p-10 md:h-4/5 lg:h-4/5 rounded-lg bg-gray-800 shadow-2xl">
             <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
@@ -171,6 +180,25 @@ function BookAppointment() {
 
                 }
 
+                {booked
+                ? <div id="toast-success" className="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+                    <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+                        <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                        </svg>
+                        <span className="sr-only">Check icon</span>
+                    </div>
+                    <div className="ms-3 text-sm font-normal">Appointment successfully booked. Thanks {firstName}!</div>
+                    <button onClick={handleClose} type="button" className="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
+                        <span className="sr-only">Close</span>
+                        <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                    </button>
+                </div>
+            : null
+                }
+
 
             </form>
             </div>
@@ -182,7 +210,7 @@ function BookAppointment() {
                         <p className="lg:text-9xl md:text-7xl sm:text-6xl text-5xl font-dancing-script">By Sarah Scott</p>
                     </div>
                     <div className="flex flex-row justify-center">
-                        <img src={Eyelashes} width="70%" className="rounded-lg border-2 border-black" />
+                        <img src={Eyelashes} width="70%" className="rounded-lg border-2 border-black w-1/3 h-1/3 md:w-2/3 md:h-2/3" />
                     </div>
                 </div>
             </div>
