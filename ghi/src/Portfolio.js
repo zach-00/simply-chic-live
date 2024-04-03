@@ -1,10 +1,12 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 function Portfolio() {
 
     const [clickedHair, setClickedHair] = useState(false);
     const [clickedEyelashes, setClickedEyelashes] = useState(true);
+
+    const [currentUserId, setCurrentUserId] = useState('');
 
     const [displayModal, setDisplayModal] = useState(false);
     const [image, setImage] = useState('');
@@ -72,6 +74,10 @@ function Portfolio() {
     const handleCloseModal = () => {
         setDisplayModal(false);
     }
+
+    useEffect(() => {
+        setCurrentUserId(localStorage.getItem('user_id'));
+    }, []);
 
 
     // const displayModalTEMP = (e) => {
@@ -174,6 +180,8 @@ function Portfolio() {
 
     // console.log('HIDDEN FORM -->: ', document.getElementById('hidden-input'));
 
+    console.log(currentUserId);
+
 
     return (
         <>
@@ -190,15 +198,6 @@ function Portfolio() {
                 </span>
             </button>
 
-
-            {/* <button className="navbar-item mx-5 md:mx-10" onClick={handleHairClick}>
-            See Hair
-            </button> */}
-
-            {/* <button className="navbar-item mx-5 md:mx-10" onClick={handleEyelashClick}>
-            See Eyelashes
-            </button> */}
-
             <button onClick={handleEyelashClick} className="relative mx-5 md:mx-10 inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
                 <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                 See Eyelashes
@@ -207,7 +206,8 @@ function Portfolio() {
 
 
 
-
+            {currentUserId === '5' ?
+            <>
             <button onClick={handleClick} className="relative mx-5 md:mx-10 inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
                 <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                     Upload Image
@@ -215,6 +215,9 @@ function Portfolio() {
             </button>
 
             <input type="file" onChange={handleChange} ref={hiddenFileInput} style={{display: 'none'}} />
+            </>
+            : null
+            }
 
         </div>
 

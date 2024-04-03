@@ -52,6 +52,13 @@ function LoginPage() {
                 localStorage.setItem('full_name', data.full_name);
                 localStorage.setItem('phone_number', data.phone_number);
                 localStorage.setItem('user_id', data.user_id);
+
+                setTimeout(() => {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('full_name');
+                    localStorage.removeItem('phone_number');
+                    localStorage.removeItem('user_id');
+                }, 1800000);
             }
 
         navigate('/');

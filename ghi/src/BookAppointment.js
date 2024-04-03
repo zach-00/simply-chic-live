@@ -2,7 +2,6 @@
 import Eyelashes from './assets/eyelashextensions.jpeg';
 // import { Datepicker } from 'flowbite-react/lib/esm/components/Datepicker/Datepicker';
 // import { useNavigate } from 'react-router-dom';
-import { getAppointments } from './acl';
 
 
 function BookAppointment() {

@@ -27,6 +27,9 @@ const ThemeIcon = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('full_name');
+        localStorage.removeItem('phone_number');
+        localStorage.removeItem('user_id');
         navigate('/');
     }
 
