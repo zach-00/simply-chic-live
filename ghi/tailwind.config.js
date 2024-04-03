@@ -7,6 +7,15 @@ module.exports = {
   ],
   darkMode: 'class',
   theme: {
+    screens: {
+      'xxsm': '450px',
+      'xsm': '520px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       colors: {
         gray: {
