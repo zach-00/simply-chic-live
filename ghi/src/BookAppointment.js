@@ -141,7 +141,7 @@ function BookAppointment() {
 
                 <div className="flex flex-col gap-10">
                     <div className="flex flex-row justify-center">
-                        <p className="lg:text-9xl md:text-7xl sm:text-6xl text-5xl font-dancing-script">By Sarah Scott</p>
+                        <p className="lg:text-9xl md:text-7xl sm:text-6xl text-5xl text-center font-dancing-script">By Sarah Scott</p>
                     </div>
                     <div className="flex flex-row justify-center">
                         <img src={Eyelashes} width="70%" className="rounded-lg border-2 border-black w-2/3 h-2/3 xxsm:w-3/5 xxsm:h-3/5 xsm:h-2/5 xsm:w-2/5 md:h-2/3 md:w-2/3" />
