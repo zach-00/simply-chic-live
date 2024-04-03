@@ -125,13 +125,6 @@ function BookAppointment() {
         <div className="w-full h-screen bg-white mb-80 sm:mb-96 md:mb-0">
             <div className="max-width[1240px] w-full h-screen mx-auto my-auto grid md:grid-cols-2 items-center gap-5">
 
-            {/* <div className="flex flex-row justify-center w-full h-3/5">
-            <div className="flex flex-col justify-center min-h-96">
-
-
-            </div>
-            </div> */}
-            {/* <iframe src="https://example.acuityscheduling.com" width="100%" height="300" frameBorder="0"></iframe> */}
 
             <div className="flex flex-col justify-center h-screen">
 
